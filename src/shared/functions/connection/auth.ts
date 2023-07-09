@@ -1,7 +1,5 @@
-import { removeItem } from 'localforage';
-
 import { AUTHORIZATION_KEY } from '../../constants/authorizationConstants';
-import { getItem, setItem } from './storageProxy';
+import { getItem, removeItem, setItem } from './storageProxy';
 
 export const unsetAuthorizationToken = () => removeItem(AUTHORIZATION_KEY);
 

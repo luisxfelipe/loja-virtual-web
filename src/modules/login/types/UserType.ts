@@ -1,3 +1,7 @@
 export interface UserType {
-  access_token: string;
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+  cpf: string;
 }
