@@ -42,23 +42,6 @@ export const useRequests = () => {
     return result;
   };
 
-  const postRequest = async <T>(url: string, body: unknown): Promise<T | undefined> => {
-    setLoading(true);
-
-    const response = await connectionAPIPost<T>(url, body)
-      .then((result) => {
-        setNotification('Requisição realizada com sucesso', 'success');
-        return result;
-      })
-      .catch((error: Error) => {
-        setNotification(error.message, 'error');
-        return undefined;
-      });
-
-    setLoading(false);
-    return response;
-  };
-
   const authRequest = async (body: unknown): Promise<void> => {
     setLoading(true);
 
@@ -80,6 +63,5 @@ export const useRequests = () => {
     loading,
     authRequest,
     request,
-    postRequest,
   };
 };
