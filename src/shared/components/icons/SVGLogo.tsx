@@ -1,6 +1,7 @@
 const SVGLogo = ({ ...props }: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
+      {...props}
       width="202"
       height="143"
       viewBox="0 0 202 143"

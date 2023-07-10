@@ -25,7 +25,7 @@ export const verifyLoggedIn = async (setUser: (user: UserType) => void, user?: U
       .then((user) => {
         setUser(user);
       })
-      .catch((error) => {
+      .catch(() => {
         unsetAuthorizationToken();
         location.href = '/login';
       });
