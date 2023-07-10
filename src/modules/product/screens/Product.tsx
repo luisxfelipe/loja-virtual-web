@@ -6,20 +6,28 @@ import { URL_PRODUCTS } from '../../../shared/constants/urls';
 import { MethodsEnum } from '../../../shared/enums/methods.enum';
 import { useDataContext } from '../../../shared/hooks/useDataContext';
 import { useRequests } from '../../../shared/hooks/useRequests';
-import { ProductType } from '../ProductType';
+import { ProductType } from '../../../shared/types/ProductType';
+import CategoryColum from '../components/CategoryColum';
+import TooltipImage from '../components/TooltipImage';
 
 const columns: ColumnsType<ProductType> = [
   {
     title: 'Id',
     dataIndex: 'id',
     key: 'id',
-    render: (text) => <a>{text}</a>,
+    render: (_, product) => <TooltipImage product={product} />,
   },
   {
     title: 'Nome',
     dataIndex: 'name',
     key: 'name',
     render: (text) => <a>{text}</a>,
+  },
+  {
+    title: 'Categoria',
+    dataIndex: 'category',
+    key: 'category',
+    render: (_, product) => <CategoryColum category={product.category} />,
   },
   {
     title: 'Preço',
