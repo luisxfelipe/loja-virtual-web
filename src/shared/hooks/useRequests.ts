@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { NavigateFunction } from 'react-router-dom';
 
+import { FirstScreenRoutesEnum } from '../../modules/firstScreen/routes';
 import { AuthType } from '../../modules/login/types/AuthType';
-import { ProductRoutesEnum } from '../../modules/product/routes';
 import { useGlobalReducer } from '../../store/reducers/globalReducer/useGlobalReducer';
 import { ERROR_INVALID_LOGIN } from '../constants/errorsStatus';
 import { URL_LOGIN } from '../constants/urls';
@@ -41,19 +41,22 @@ export const useRequests = () => {
     return result;
   };
 
-  const authRequest = async (body: unknown): Promise<void> => {
-    const navigate = useNavigate();
+  const authRequest = async (navigate: NavigateFunction, body: unknown): Promise<void> => {
     setLoading(true);
 
     await connectionAPIPost<AuthType>(URL_LOGIN, body)
       .then((result) => {
+        console.log(`result: ${JSON.stringify(result)}`); // result: [object Object]
         setUser(result.user);
-        setAuthorizationToken(result.access_token);
-        navigate(ProductRoutesEnum.PRODUCT);
+        console.log(`result.user: ${JSON.stringify(result.user)}`); // result.user: undefined
+        setAuthorizationToken(`Bearer ${result.access_token}`);
+        console.log(`result.access_token: ${JSON.stringify(result.access_token)}`); // result.access_token: undefined
+        navigate(FirstScreenRoutesEnum.FIRST_SCREEN);
         return result;
       })
       .catch(() => {
         setNotification(ERROR_INVALID_LOGIN, 'error');
+        return undefined;
       });
 
     setLoading(false);
