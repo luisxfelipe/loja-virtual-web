@@ -1,11 +1,8 @@
-import { CategoryType } from './CategoryType';
-
-export interface ProductType {
-  id: number;
+export interface InsertProduct {
   name: string;
   price: number;
+  categoryId?: number;
   image: string;
-  category?: CategoryType;
   weight: number;
   length: number;
   height: number;
