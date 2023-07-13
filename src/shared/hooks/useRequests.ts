@@ -46,11 +46,8 @@ export const useRequests = () => {
 
     await connectionAPIPost<AuthType>(URL_LOGIN, body)
       .then((result) => {
-        console.log(`result: ${JSON.stringify(result)}`); // result: [object Object]
         setUser(result.user);
-        console.log(`result.user: ${JSON.stringify(result.user)}`); // result.user: undefined
         setAuthorizationToken(`Bearer ${result.access_token}`);
-        console.log(`result.access_token: ${JSON.stringify(result.access_token)}`); // result.access_token: undefined
         navigate(FirstScreenRoutesEnum.FIRST_SCREEN);
         return result;
       })
