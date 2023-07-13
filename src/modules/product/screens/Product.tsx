@@ -1,5 +1,6 @@
+import Search from 'antd/es/input/Search';
 import { ColumnsType } from 'antd/es/table';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Button from '../../../shared/components/buttons/button/Button';
@@ -14,6 +15,7 @@ import { useProductReducer } from '../../../store/reducers/productReducer/usePro
 import CategoryColum from '../components/CategoryColum';
 import TooltipImage from '../components/TooltipImage';
 import { ProductRoutesEnum } from '../routes';
+import { BoxButtons, LimiteSizeButton, LimiteSizeInput } from '../styles/product.styles';
 
 const columns: ColumnsType<ProductType> = [
   {
@@ -26,6 +28,7 @@ const columns: ColumnsType<ProductType> = [
     title: 'Nome',
     dataIndex: 'name',
     key: 'name',
+    sorter: (a, b) => a.name.localeCompare(b.name),
     render: (text) => <a>{text}</a>,
   },
   {
@@ -44,10 +47,13 @@ const columns: ColumnsType<ProductType> = [
 
 const Product = () => {
   const { products, setProducts } = useProductReducer();
-
+  const [productsFiltered, setProductsFiltered] = useState<ProductType[]>();
   const { request } = useRequests();
-
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setProductsFiltered([...products]);
+  }, [products]);
 
   useEffect(() => {
     request<ProductType[]>(URL_PRODUCTS, MethodsEnum.GET, setProducts);
@@ -57,10 +63,30 @@ const Product = () => {
     navigate(ProductRoutesEnum.PRODUCT_INSERT);
   };
 
+  const onSearch = (value: string) => {
+    if (value) {
+      setProductsFiltered([
+        ...products.filter((product) => product.name.toLowerCase().includes(value.toLowerCase())),
+      ]);
+    } else {
+      setProductsFiltered([...products]);
+    }
+  };
+
   return (
     <Screen listBreadcrumb={[{ name: 'HOME' }, { name: 'PRODUTOS' }]}>
-      <Button onClick={handleInsertProduct}>Novo Produto</Button>
-      <Table columns={columns} dataSource={products} />
+      <BoxButtons>
+        <LimiteSizeInput>
+          <Search placeholder="Buscar produto" onSearch={onSearch} enterButton />
+        </LimiteSizeInput>
+        <LimiteSizeButton>
+          <Button type="primary" onClick={handleInsertProduct}>
+            Novo Produto
+          </Button>
+        </LimiteSizeButton>
+      </BoxButtons>
+
+      <Table columns={columns} dataSource={productsFiltered} />
     </Screen>
   );
 };
