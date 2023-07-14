@@ -1,8 +1,6 @@
-import { Button, Modal, Space } from 'antd';
-import React, { useState } from 'react';
+import { Modal } from 'antd';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 import { logout } from '../../functions/connection/auth';
 import { HeaderContainer, LogoExit } from './header.styles';

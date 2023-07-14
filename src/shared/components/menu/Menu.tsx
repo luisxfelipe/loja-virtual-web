@@ -13,12 +13,12 @@ import {
 import { ProductRoutesEnum } from '../../../modules/product/routes';
 import { ContainerLogoName, ContainerMenu, LogoMenu, NameCompany } from './menu.styles';
 
-import type { MenuProps, MenuTheme } from 'antd';
+import type { MenuProps } from 'antd';
+
 type MenuItem = Required<MenuProps>['items'][number];
 
 const Menu = () => {
   const navigate = useNavigate();
-  const [theme, setTheme] = useState<MenuTheme>('dark');
   const [current, setCurrent] = useState('1');
 
   const items: MenuItem[] = [
@@ -75,10 +75,6 @@ const Menu = () => {
     },
   ];
 
-  const changeTheme = (value: boolean) => {
-    setTheme(value ? 'dark' : 'light');
-  };
-
   const onClick: MenuProps['onClick'] = (e) => {
     setCurrent(e.key);
   };
@@ -90,7 +86,7 @@ const Menu = () => {
         <NameCompany>Vendas Online</NameCompany>
       </ContainerLogoName>
       <ManuAntd
-        theme={theme}
+        theme="dark"
         onClick={onClick}
         style={{ width: 240 }}
         defaultOpenKeys={['sub1']}
