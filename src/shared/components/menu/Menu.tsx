@@ -1,12 +1,103 @@
+import { Menu as ManuAntd } from 'antd';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import {
+  AppstoreOutlined,
+  HomeOutlined,
+  ShoppingOutlined,
+  TagOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
+
+import { ProductRoutesEnum } from '../../../modules/product/routes';
 import { ContainerLogoName, ContainerMenu, LogoMenu, NameCompany } from './menu.styles';
 
+import type { MenuProps, MenuTheme } from 'antd';
+type MenuItem = Required<MenuProps>['items'][number];
+
 const Menu = () => {
+  const navigate = useNavigate();
+  const [theme, setTheme] = useState<MenuTheme>('dark');
+  const [current, setCurrent] = useState('1');
+
+  const items: MenuItem[] = [
+    {
+      key: 'home',
+      label: 'Principal',
+      icon: <HomeOutlined />,
+    },
+    {
+      key: 'products',
+      label: 'Produtos',
+      icon: <ShoppingOutlined />,
+      children: [
+        {
+          key: 'products_view',
+          label: 'Visualizar',
+          onClick: () => navigate(ProductRoutesEnum.PRODUCT),
+        },
+        {
+          key: 'products_insert',
+          label: 'Inserir',
+          onClick: () => navigate(ProductRoutesEnum.PRODUCT_INSERT),
+        },
+      ],
+    },
+    {
+      key: 'categories',
+      label: 'Categorias',
+      icon: <AppstoreOutlined />,
+      children: [
+        {
+          key: 'categories_view',
+          label: 'Visualizar',
+          onClick: () => navigate(''),
+        },
+        {
+          key: 'categories_insert',
+          label: 'Inserir',
+          onClick: () => navigate(''),
+        },
+      ],
+    },
+    {
+      key: 'order',
+      label: 'Pedidos',
+      icon: <TagOutlined />,
+      onClick: () => navigate(''),
+    },
+    {
+      key: 'user',
+      label: 'Clientes',
+      icon: <UserOutlined />,
+      onClick: () => navigate(''),
+    },
+  ];
+
+  const changeTheme = (value: boolean) => {
+    setTheme(value ? 'dark' : 'light');
+  };
+
+  const onClick: MenuProps['onClick'] = (e) => {
+    setCurrent(e.key);
+  };
+
   return (
     <ContainerMenu>
       <ContainerLogoName>
         <LogoMenu />
         <NameCompany>Vendas Online</NameCompany>
       </ContainerLogoName>
+      <ManuAntd
+        theme={theme}
+        onClick={onClick}
+        style={{ width: 240 }}
+        defaultOpenKeys={['sub1']}
+        selectedKeys={[current]}
+        mode="inline"
+        items={items}
+      />
     </ContainerMenu>
   );
 };
