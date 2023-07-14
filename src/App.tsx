@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { createBrowserRouter, RouteObject, RouterProvider } from 'react-router-dom';
 
+import { categoryRoutes } from './modules/category/routes';
 import { firstScreenRoutes } from './modules/firstScreen/routes';
 import { loginRoutes } from './modules/login/routes';
 import { productRoutes } from './modules/product/routes';
@@ -12,9 +13,12 @@ import { useRequests } from './shared/hooks/useRequests';
 import { useGlobalReducer } from './store/reducers/globalReducer/useGlobalReducer';
 
 import type { Router as RemixRouter } from '@remix-run/router';
-
 const routes: RouteObject[] = [...loginRoutes];
-const routesLoggedIn: RouteObject[] = [...productRoutes, ...firstScreenRoutes].map((route) => ({
+const routesLoggedIn: RouteObject[] = [
+  ...categoryRoutes,
+  ...firstScreenRoutes,
+  ...productRoutes,
+].map((route) => ({
   ...route,
   loader: verifyLoggedIn,
 }));

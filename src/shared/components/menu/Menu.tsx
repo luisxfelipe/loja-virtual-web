@@ -10,11 +10,11 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 
+import { CategoryRoutesEnum } from '../../../modules/category/routes';
 import { ProductRoutesEnum } from '../../../modules/product/routes';
 import { ContainerLogoName, ContainerMenu, LogoMenu, NameCompany } from './menu.styles';
 
 import type { MenuProps } from 'antd';
-
 type MenuItem = Required<MenuProps>['items'][number];
 
 const Menu = () => {
@@ -52,12 +52,12 @@ const Menu = () => {
         {
           key: 'categories_view',
           label: 'Visualizar',
-          onClick: () => navigate(''),
+          onClick: () => navigate(CategoryRoutesEnum.CATEGORY),
         },
         {
           key: 'categories_insert',
           label: 'Inserir',
-          onClick: () => navigate(''),
+          onClick: () => navigate(CategoryRoutesEnum.CATEGORY_INSERT),
         },
       ],
     },
