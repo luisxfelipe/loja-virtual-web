@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 
 import Button from '../../../shared/components/buttons/button/Button';
 import Screen from '../../../shared/components/screen/Screen';
+import { DisplayFlexJustfyBetween } from '../../../shared/components/styles/display.styles';
+import { LimitedContainer } from '../../../shared/components/styles/limited.styles';
 import Table from '../../../shared/components/table/Table';
 import { URL_PRODUCTS } from '../../../shared/constants/urls';
 import { MethodsEnum } from '../../../shared/enums/methods.enum';
@@ -15,7 +17,6 @@ import { useProductReducer } from '../../../store/reducers/productReducer/usePro
 import CategoryColum from '../components/CategoryColum';
 import TooltipImage from '../components/TooltipImage';
 import { ProductRoutesEnum } from '../routes';
-import { BoxButtons, LimiteSizeButton, LimiteSizeInput } from '../styles/product.styles';
 
 const columns: ColumnsType<ProductType> = [
   {
@@ -75,17 +76,16 @@ const Product = () => {
 
   return (
     <Screen listBreadcrumb={[{ name: 'HOME' }, { name: 'PRODUTOS' }]}>
-      <BoxButtons>
-        <LimiteSizeInput>
+      <DisplayFlexJustfyBetween margin="0px 0px 16px 0px">
+        <LimitedContainer width={240}>
           <Search placeholder="Buscar produto" onSearch={onSearch} enterButton />
-        </LimiteSizeInput>
-        <LimiteSizeButton>
+        </LimitedContainer>
+        <LimitedContainer width={120}>
           <Button type="primary" onClick={handleInsertProduct}>
             Novo Produto
           </Button>
-        </LimiteSizeButton>
-      </BoxButtons>
-
+        </LimitedContainer>
+      </DisplayFlexJustfyBetween>
       <Table columns={columns} dataSource={productsFiltered} />
     </Screen>
   );
