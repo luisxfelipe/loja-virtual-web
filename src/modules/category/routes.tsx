@@ -1,6 +1,7 @@
 import { RouteObject } from 'react-router-dom';
 
 import Category from './';
+import CategoryInsert from './screens/CategoryInsert';
 
 export enum CategoryRoutesEnum {
   CATEGORY = '/category',
@@ -14,6 +15,6 @@ export const categoryRoutes: RouteObject[] = [
   },
   {
     path: CategoryRoutesEnum.CATEGORY_INSERT,
-    element: <Category />,
+    element: <CategoryInsert />,
   },
 ];

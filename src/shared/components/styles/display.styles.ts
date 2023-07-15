@@ -12,6 +12,10 @@ export const DisplayFlexJustfyRight = styled(DisplayFlex)`
   justify-content: right;
 `;
 
+export const DisplayFlexJustfyCenter = styled(DisplayFlex)`
+  justify-content: center;
+`;
+
 export const DisplayFlexJustfyBetween = styled(DisplayFlex)<DisplayFlexProps>`
   display: flex;
   justify-content: space-between;

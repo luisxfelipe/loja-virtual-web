@@ -5,12 +5,14 @@ import Input from '../../../shared/components/inputs/input/Input';
 import InputMoney from '../../../shared/components/inputs/inputMoney/InputMoney';
 import Select from '../../../shared/components/inputs/select/select';
 import Screen from '../../../shared/components/screen/Screen';
-import { DisplayFlexJustfyRight } from '../../../shared/components/styles/display.styles';
+import {
+  DisplayFlexJustfyCenter,
+  DisplayFlexJustfyRight,
+} from '../../../shared/components/styles/display.styles';
 import { LimitedContainer } from '../../../shared/components/styles/limited.styles';
 import { useCategory } from '../../category/hooks/useCategory';
 import { useInsertProduct } from '../hooks/useInsertProduct';
 import { ProductRoutesEnum } from '../routes';
-import { ProductInsertContainer } from '../styles/productInsert.styles';
 
 const ProductInsert = () => {
   const {
@@ -36,7 +38,7 @@ const ProductInsert = () => {
         { name: 'INSERIR PRODUTO' },
       ]}
     >
-      <ProductInsertContainer>
+      <DisplayFlexJustfyCenter>
         <LimitedContainer width={400}>
           <Input
             onChange={(event) => onChangeInput(event, 'name')}
@@ -124,7 +126,7 @@ const ProductInsert = () => {
             </LimitedContainer>
           </DisplayFlexJustfyRight>
         </LimitedContainer>
-      </ProductInsertContainer>
+      </DisplayFlexJustfyCenter>
     </Screen>
   );
 };
