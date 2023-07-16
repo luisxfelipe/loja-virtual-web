@@ -1,9 +1,8 @@
-import { TableProps } from 'antd';
-import TableAntd from 'antd/es/table';
+import { Table as TableAntD, TableProps } from 'antd';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function Table<RecordType extends object = any>(props: TableProps<RecordType>) {
-  return <TableAntd {...props} />;
+  return <TableAntD {...props} />;
 }
 
 export default Table;
