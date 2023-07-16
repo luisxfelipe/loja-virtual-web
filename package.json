@@ -9,6 +9,7 @@
     "lint": "npm run lint:format && npm run lint:fix ",
     "preview": "vite preview",
     "test": "jest",
+    "test:watch": "jest --watch",
     "test:cov": "jest --coverage"
   },
   "dependencies": {
