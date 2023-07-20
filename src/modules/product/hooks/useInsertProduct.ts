@@ -7,25 +7,28 @@ import { connectionAPIPost } from '../../../shared/functions/connection/connecti
 import { useGlobalReducer } from '../../../store/reducers/globalReducer/useGlobalReducer';
 import { ProductRoutesEnum } from '../routes';
 
+const DEFAULT_PRODUCT = {
+  name: '',
+  price: 0,
+  image: '',
+  weight: 0,
+  length: 0,
+  height: 0,
+  width: 0,
+  diameter: 0,
+};
+
 export const useInsertProduct = () => {
   const navigate = useNavigate();
   const { setNotification } = useGlobalReducer();
   const [loading, setLoading] = useState(false);
   const [disabledButton, setDisabledButton] = useState(true);
-  const [product, setProduct] = useState<InsertProduct>({
-    name: '',
-    price: 0,
-    image: '',
-    weight: 0,
-    length: 0,
-    width: 0,
-    height: 0,
-    diameter: 0,
-  });
+  const [product, setProduct] = useState<InsertProduct>(DEFAULT_PRODUCT);
 
   useEffect(() => {
     if (
       product.name &&
+      product.image &&
       product.categoryId &&
       product.price > 0 &&
       product.weight > 0 &&
