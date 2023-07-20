@@ -6,11 +6,14 @@ import InputMoney from '../../../shared/components/inputs/inputMoney/InputMoney'
 import Select from '../../../shared/components/inputs/select/select';
 import Screen from '../../../shared/components/screen/Screen';
 import {
+  DisplayFlex,
   DisplayFlexJustfyCenter,
   DisplayFlexJustfyRight,
 } from '../../../shared/components/styles/display.styles';
 import { LimitedContainer } from '../../../shared/components/styles/limited.styles';
+import { CategoryType } from '../../../shared/types/CategoryType';
 import { useCategory } from '../../category/hooks/useCategory';
+import { ProductInsertTestIdEnum } from '../enum/ProductInsertTestId.enum';
 import { useInsertProduct } from '../hooks/useInsertProduct';
 import { ProductRoutesEnum } from '../routes';
 
@@ -38,9 +41,10 @@ const ProductInsert = () => {
         { name: 'INSERIR PRODUTO' },
       ]}
     >
-      <DisplayFlexJustfyCenter>
+      <DisplayFlexJustfyCenter data-testid={ProductInsertTestIdEnum.PRODUCT_INSERT_CONTAINER}>
         <LimitedContainer width={400}>
           <Input
+            data-testid={ProductInsertTestIdEnum.PRODUCT_INPUT_NAME}
             onChange={(event) => onChangeInput(event, 'name')}
             value={product.name}
             margin="0px 0px 16px 0px"
@@ -48,74 +52,94 @@ const ProductInsert = () => {
             placeholder="Nome"
           />
           <Input
+            data-testid={ProductInsertTestIdEnum.PRODUCT_INPUT_IMAGE}
             onChange={(event) => onChangeInput(event, 'image')}
             value={product.image}
             margin="0px 0px 16px 0px"
-            title="URL imagem"
-            placeholder="URL imagem"
+            title="Url imagem"
+            placeholder="Url imagem"
           />
           <InputMoney
+            data-testid={ProductInsertTestIdEnum.PRODUCT_INPUT_PRICE}
             onChange={(event) => onChangeInput(event, 'price', true)}
             value={product.price}
             margin="0px 0px 16px 0px"
             title="Preço"
             placeholder="Preço"
           />
-          <InputMoney
-            onChange={(event) => onChangeInput(event, 'weight', true)}
-            value={product.weight}
+          <Select
+            defaultValue={`${product.categoryId || ''}`}
+            data-testid={ProductInsertTestIdEnum.PRODUCT_INPUT_SELECT}
+            title="Categoria"
             margin="0px 0px 16px 0px"
-            title="Peso"
-            placeholder="Peso"
+            onChange={handleChangeSelect}
+            options={categories.map((category: CategoryType) => ({
+              value: `${category.id}`,
+              label: `${category.name}`,
+            }))}
           />
+          <DisplayFlex>
+            <InputMoney
+              data-testid={ProductInsertTestIdEnum.PRODUCT_INPUT_WEIGHT}
+              addonBefore="Kg"
+              onChange={(event) => onChangeInput(event, 'weight', true)}
+              value={product.weight}
+              margin="0px 16px 16px 0px"
+              title="Peso"
+              placeholder="Peso"
+            />
+            <InputMoney
+              data-testid={ProductInsertTestIdEnum.PRODUCT_INPUT_LENGTH}
+              addonBefore="cm"
+              onChange={(event) => onChangeInput(event, 'length', true)}
+              value={product.length}
+              margin="0px 0px 16px 0px"
+              title="Comprimento"
+              placeholder="Comprimento"
+            />
+          </DisplayFlex>
+          <DisplayFlex>
+            <InputMoney
+              data-testid={ProductInsertTestIdEnum.PRODUCT_INPUT_HEIGHT}
+              onChange={(event) => onChangeInput(event, 'height', true)}
+              value={product.height}
+              addonBefore="cm"
+              margin="0px 16px 16px 0px"
+              title="Altura"
+              placeholder="Altura"
+            />
+            <InputMoney
+              data-testid={ProductInsertTestIdEnum.PRODUCT_INPUT_WIDTH}
+              onChange={(event) => onChangeInput(event, 'width', true)}
+              value={product.width}
+              addonBefore="cm"
+              margin="0px 0px 16px 0px"
+              title="Largura"
+              placeholder="Largura"
+            />
+          </DisplayFlex>
           <InputMoney
-            onChange={(event) => onChangeInput(event, 'length', true)}
-            value={product.length}
-            margin="0px 0px 16px 0px"
-            title="Comprimento"
-            placeholder="Comprimento"
-          />
-          <InputMoney
-            onChange={(event) => onChangeInput(event, 'width', true)}
-            value={product.width}
-            margin="0px 0px 16px 0px"
-            title="Largura"
-            placeholder="Largura"
-          />
-          <InputMoney
-            onChange={(event) => onChangeInput(event, 'height', true)}
-            value={product.height}
-            margin="0px 0px 16px 0px"
-            title="Altura"
-            placeholder="Altura"
-          />
-          <InputMoney
+            data-testid={ProductInsertTestIdEnum.PRODUCT_INPUT_DIAMETER}
             onChange={(event) => onChangeInput(event, 'diameter', true)}
             value={product.diameter}
-            margin="0px 0px 16px 0px"
+            addonBefore="cm"
+            margin="0px 0px 32px 0px"
             title="Diâmetro"
             placeholder="Diâmetro"
           />
-          <Select
-            title="Categoria"
-            margin="0px 0px 32px 0px"
-            onChange={handleChangeSelect}
-            options={
-              categories &&
-              categories.map((category) => ({
-                value: category.id,
-                label: category.name,
-              }))
-            }
-          />
           <DisplayFlexJustfyRight>
             <LimitedContainer margin="0px 8px" width={120}>
-              <Button danger onClick={handleOnClickedCancel}>
+              <Button
+                data-testid={ProductInsertTestIdEnum.PRODUCT_BUTTON_CANCEL}
+                danger
+                onClick={handleOnClickedCancel}
+              >
                 Cancelar
               </Button>
             </LimitedContainer>
             <LimitedContainer width={120}>
               <Button
+                data-testid={ProductInsertTestIdEnum.PRODUCT_BUTTON_INSERT}
                 loading={loading}
                 disabled={disabledButton}
                 onClick={handleInsertProduct}
