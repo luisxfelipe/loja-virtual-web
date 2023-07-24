@@ -3,7 +3,11 @@ import { redirect } from 'react-router-dom';
 import { LoginRoutesEnum } from '../../../../modules/login/routes';
 import { AUTHORIZATION_KEY } from '../../../constants/authorizationConstants';
 import {
-    getAuthorizationToken, logout, setAuthorizationToken, unsetAuthorizationToken, verifyLoggedIn
+  getAuthorizationToken,
+  logout,
+  setAuthorizationToken,
+  unsetAuthorizationToken,
+  verifyLoggedIn,
 } from '../auth';
 import { connectionAPIGet } from '../connectionApi';
 import { getItem, removeItem, setItem } from '../storageProxy';
