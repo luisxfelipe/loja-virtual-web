@@ -11,6 +11,7 @@ import {
 } from '@ant-design/icons';
 
 import { CategoryRoutesEnum } from '../../../modules/category/routes';
+import { OrderRoutesEnum } from '../../../modules/orders/routes';
 import { ProductRoutesEnum } from '../../../modules/product/routes';
 import { ContainerLogoName, ContainerMenu, LogoMenu, NameCompany } from './menu.styles';
 
@@ -65,7 +66,7 @@ const Menu = () => {
       key: 'order',
       label: 'Pedidos',
       icon: <TagOutlined />,
-      onClick: () => navigate(''),
+      onClick: () => navigate(OrderRoutesEnum.ORDER),
     },
     {
       key: 'user',
