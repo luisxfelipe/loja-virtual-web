@@ -4,8 +4,7 @@ import Button from '../../../shared/components/buttons/button/Button';
 import Input from '../../../shared/components/inputs/input/Input';
 import Screen from '../../../shared/components/screen/Screen';
 import {
-  DisplayFlexJustfyCenter,
-  DisplayFlexJustfyRight,
+    DisplayFlexJustifyCenter, DisplayFlexJustifyRight
 } from '../../../shared/components/styles/display.styles';
 import { LimitedContainer } from '../../../shared/components/styles/limited.styles';
 import { useInsertCategory } from '../hooks/useInsertCategory';
@@ -27,7 +26,7 @@ const CategoryInsert = () => {
         { name: 'INSERIR CATEGORIA' },
       ]}
     >
-      <DisplayFlexJustfyCenter>
+      <DisplayFlexJustifyCenter>
         <LimitedContainer width={400}>
           <Input
             onChange={handleOnChangeName}
@@ -36,7 +35,7 @@ const CategoryInsert = () => {
             title="Nome"
             placeholder="Nome"
           />
-          <DisplayFlexJustfyRight>
+          <DisplayFlexJustifyRight>
             <LimitedContainer margin="0px 8px" width={160}>
               <Button onClick={handleOnClickedCancel} danger>
                 Cancelar
@@ -52,9 +51,9 @@ const CategoryInsert = () => {
                 Inserir Categoria
               </Button>
             </LimitedContainer>
-          </DisplayFlexJustfyRight>
+          </DisplayFlexJustifyRight>
         </LimitedContainer>
-      </DisplayFlexJustfyCenter>
+      </DisplayFlexJustifyCenter>
     </Screen>
   );
 };

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Button from '../../../shared/components/buttons/button/Button';
 import Screen from '../../../shared/components/screen/Screen';
-import { DisplayFlexJustfyBetween } from '../../../shared/components/styles/display.styles';
+import { DisplayFlexJustifyBetween } from '../../../shared/components/styles/display.styles';
 import { LimitedContainer } from '../../../shared/components/styles/limited.styles';
 import Table from '../../../shared/components/table/Table';
 import { CategoryType } from '../../../shared/types/CategoryType';
@@ -45,7 +45,7 @@ const Category = () => {
 
   return (
     <Screen listBreadcrumb={[{ name: 'HOME' }, { name: 'CATEGORIAS' }]}>
-      <DisplayFlexJustfyBetween margin="0px 0px 16px 0px">
+      <DisplayFlexJustifyBetween margin="0px 0px 16px 0px">
         <LimitedContainer width={240}>
           <Search placeholder="Buscar categoria" onSearch={handleOnChangeSearch} enterButton />
         </LimitedContainer>
@@ -54,7 +54,7 @@ const Category = () => {
             Nova Categoria
           </Button>
         </LimitedContainer>
-      </DisplayFlexJustfyBetween>
+      </DisplayFlexJustifyBetween>
       <Table columns={columns} dataSource={categories} />
     </Screen>
   );

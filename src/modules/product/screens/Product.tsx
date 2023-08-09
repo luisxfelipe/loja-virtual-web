@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Button from '../../../shared/components/buttons/button/Button';
 import Screen from '../../../shared/components/screen/Screen';
-import { DisplayFlexJustfyBetween } from '../../../shared/components/styles/display.styles';
+import { DisplayFlexJustifyBetween } from '../../../shared/components/styles/display.styles';
 import { LimitedContainer } from '../../../shared/components/styles/limited.styles';
 import Table from '../../../shared/components/table/Table';
 import { URL_PRODUCTS } from '../../../shared/constants/urls';
@@ -78,7 +78,7 @@ const Product = () => {
 
   return (
     <Screen listBreadcrumb={[{ name: 'HOME' }, { name: 'PRODUTOS' }]}>
-      <DisplayFlexJustfyBetween margin="0px 0px 16px 0px">
+      <DisplayFlexJustifyBetween margin="0px 0px 16px 0px">
         <LimitedContainer width={240}>
           <Search placeholder="Buscar produto" onSearch={onSearch} enterButton />
         </LimitedContainer>
@@ -87,7 +87,7 @@ const Product = () => {
             Novo Produto
           </Button>
         </LimitedContainer>
-      </DisplayFlexJustfyBetween>
+      </DisplayFlexJustifyBetween>
       <Table columns={columns} dataSource={productsFiltered} />
     </Screen>
   );

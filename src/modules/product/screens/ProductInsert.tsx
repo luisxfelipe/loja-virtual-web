@@ -6,9 +6,7 @@ import InputMoney from '../../../shared/components/inputs/inputMoney/InputMoney'
 import Select from '../../../shared/components/inputs/select/select';
 import Screen from '../../../shared/components/screen/Screen';
 import {
-  DisplayFlex,
-  DisplayFlexJustfyCenter,
-  DisplayFlexJustfyRight,
+    DisplayFlex, DisplayFlexJustifyCenter, DisplayFlexJustifyRight
 } from '../../../shared/components/styles/display.styles';
 import { LimitedContainer } from '../../../shared/components/styles/limited.styles';
 import { CategoryType } from '../../../shared/types/CategoryType';
@@ -41,7 +39,7 @@ const ProductInsert = () => {
         { name: 'INSERIR PRODUTO' },
       ]}
     >
-      <DisplayFlexJustfyCenter data-testid={ProductInsertTestIdEnum.PRODUCT_INSERT_CONTAINER}>
+      <DisplayFlexJustifyCenter data-testid={ProductInsertTestIdEnum.PRODUCT_INSERT_CONTAINER}>
         <LimitedContainer width={400}>
           <Input
             data-testid={ProductInsertTestIdEnum.PRODUCT_INPUT_NAME}
@@ -127,7 +125,7 @@ const ProductInsert = () => {
             title="Diâmetro"
             placeholder="Diâmetro"
           />
-          <DisplayFlexJustfyRight>
+          <DisplayFlexJustifyRight>
             <LimitedContainer margin="0px 8px" width={120}>
               <Button
                 data-testid={ProductInsertTestIdEnum.PRODUCT_BUTTON_CANCEL}
@@ -148,9 +146,9 @@ const ProductInsert = () => {
                 Inserir Produto
               </Button>
             </LimitedContainer>
-          </DisplayFlexJustfyRight>
+          </DisplayFlexJustifyRight>
         </LimitedContainer>
-      </DisplayFlexJustfyCenter>
+      </DisplayFlexJustifyCenter>
     </Screen>
   );
 };
