@@ -4,7 +4,8 @@ import Button from '../../../shared/components/buttons/button/Button';
 import Input from '../../../shared/components/inputs/input/Input';
 import Screen from '../../../shared/components/screen/Screen';
 import {
-    DisplayFlexJustifyCenter, DisplayFlexJustifyRight
+  DisplayFlexJustifyCenter,
+  DisplayFlexJustifyRight,
 } from '../../../shared/components/styles/display.styles';
 import { LimitedContainer } from '../../../shared/components/styles/limited.styles';
 import { useInsertCategory } from '../hooks/useInsertCategory';

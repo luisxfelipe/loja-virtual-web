@@ -6,7 +6,9 @@ import InputMoney from '../../../shared/components/inputs/inputMoney/InputMoney'
 import Select from '../../../shared/components/inputs/select/select';
 import Screen from '../../../shared/components/screen/Screen';
 import {
-    DisplayFlex, DisplayFlexJustifyCenter, DisplayFlexJustifyRight
+  DisplayFlex,
+  DisplayFlexJustifyCenter,
+  DisplayFlexJustifyRight,
 } from '../../../shared/components/styles/display.styles';
 import { LimitedContainer } from '../../../shared/components/styles/limited.styles';
 import { CategoryType } from '../../../shared/types/CategoryType';
