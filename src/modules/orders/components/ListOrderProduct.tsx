@@ -21,7 +21,7 @@ const columns: ColumnsType<OrderProductType> = [
     title: 'Preço',
     dataIndex: 'price',
     key: 'price',
-    render: (_, target) => <a>{convertNumberToMoney(target.price)}</a>,
+    render: (_, target) => <a>{convertNumberToMoney(Number(target.price))}</a>,
   },
   {
     title: 'Total',
