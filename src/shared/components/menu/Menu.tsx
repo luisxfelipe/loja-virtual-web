@@ -3,16 +3,13 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import {
-  AppstoreOutlined,
-  HomeOutlined,
-  ShoppingOutlined,
-  TagOutlined,
-  UserOutlined,
+    AppstoreOutlined, HomeOutlined, ShoppingOutlined, TagOutlined, UserOutlined
 } from '@ant-design/icons';
 
 import { CategoryRoutesEnum } from '../../../modules/category/routes';
 import { OrderRoutesEnum } from '../../../modules/orders/routes';
 import { ProductRoutesEnum } from '../../../modules/product/routes';
+import { UserRoutesEnum } from '../../../modules/user/routes';
 import { ContainerLogoName, ContainerMenu, LogoMenu, NameCompany } from './menu.styles';
 
 import type { MenuProps } from 'antd';
@@ -72,7 +69,7 @@ const Menu = () => {
       key: 'user',
       label: 'Clientes',
       icon: <UserOutlined />,
-      onClick: () => navigate(''),
+      onClick: () => navigate(UserRoutesEnum.USER),
     },
   ];
 

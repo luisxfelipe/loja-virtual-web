@@ -9,3 +9,5 @@ export const URL_ORDERS = 'http://localhost:3000/orders/all';
 export const URL_PRODUCTS = 'http://localhost:3000/products';
 
 export const URL_USERS = 'http://localhost:3000/users';
+
+export const URL_USERS_ALL = 'http://localhost:3000/users/all';
