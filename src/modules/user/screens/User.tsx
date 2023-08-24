@@ -1,5 +1,6 @@
 import { Input } from 'antd';
 import { ColumnType } from 'antd/es/table';
+import { useMemo } from 'react';
 
 import Button from '../../../shared/components/buttons/button/Button';
 import Loading from '../../../shared/components/loading/Loading';
@@ -9,6 +10,8 @@ import {
 } from '../../../shared/components/styles/display.styles';
 import { LimitedContainer } from '../../../shared/components/styles/limited.styles';
 import Table from '../../../shared/components/table/Table';
+import { UserTypeEnum } from '../../../shared/enums/userType.enum';
+import { getUserInfoByToken } from '../../../shared/functions/connection/auth';
 import { insertMaskInCpf } from '../../../shared/functions/cpf';
 import { insertMaskInPhone } from '../../../shared/functions/phone';
 import { UserType } from '../../login/types/UserType';
@@ -52,6 +55,8 @@ const columns: ColumnType<UserType>[] = [
 const User = () => {
   const { users, loading, handleOnChangeSearch } = useUser();
 
+  const userToken = useMemo(() => getUserInfoByToken(), []);
+
   return (
     <Screen
       listBreadcrumb={[
@@ -74,9 +79,11 @@ const User = () => {
               <Search placeholder="Buscar usuário" onSearch={handleOnChangeSearch} enterButton />
             </LimitedContainer>
             <LimitedContainer width={180}>
-              <Button type="primary" onClick={() => null}>
-                Inserir Admin
-              </Button>
+              {userToken?.typeUser === UserTypeEnum.Root && (
+                <Button type="primary" onClick={() => null}>
+                  Inserir Admin
+                </Button>
+              )}
             </LimitedContainer>
           </DisplayFlexJustifyBetween>
           <Table columns={columns} dataSource={users} />

@@ -3,7 +3,11 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import {
-    AppstoreOutlined, HomeOutlined, ShoppingOutlined, TagOutlined, UserOutlined
+  AppstoreOutlined,
+  HomeOutlined,
+  ShoppingOutlined,
+  TagOutlined,
+  UserOutlined,
 } from '@ant-design/icons';
 
 import { CategoryRoutesEnum } from '../../../modules/category/routes';
