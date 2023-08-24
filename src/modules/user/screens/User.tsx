@@ -7,7 +7,8 @@ import Button from '../../../shared/components/buttons/button/Button';
 import Loading from '../../../shared/components/loading/Loading';
 import Screen from '../../../shared/components/screen/Screen';
 import {
-    DisplayFlexJustifyBetween, DisplayFlexJustifyCenter
+  DisplayFlexJustifyBetween,
+  DisplayFlexJustifyCenter,
 } from '../../../shared/components/styles/display.styles';
 import { LimitedContainer } from '../../../shared/components/styles/limited.styles';
 import Table from '../../../shared/components/table/Table';
