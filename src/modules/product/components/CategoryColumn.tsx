@@ -20,10 +20,10 @@ const colors: string[] = [
   'purple',
 ];
 
-const CategoryColum = ({ category }: CategoryColumProps) => {
+const CategoryColumn = ({ category }: CategoryColumProps) => {
   if (!category) return null;
   const currentColor = colors[category.id - 1] || colors[0];
   return <Tag color={currentColor}>{category.name}</Tag>;
 };
 
-export default CategoryColum;
+export default CategoryColumn;

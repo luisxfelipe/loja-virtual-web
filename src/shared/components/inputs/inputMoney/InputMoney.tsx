@@ -17,7 +17,7 @@ const InputMoney = ({ value, onChange, addonBefore = 'R$', ...props }: InputMone
     const valueString = `${value}`;
 
     if (!/\D/.test(valueString.replace('.', ''))) {
-      setCurrentValue(value.toFixed(DECIMAL_SIZE).toString().replace('.', ','));
+      setCurrentValue(Number(value).toFixed(DECIMAL_SIZE).toString().replace('.', ','));
     }
   }, [value]);
 
@@ -39,7 +39,7 @@ const InputMoney = ({ value, onChange, addonBefore = 'R$', ...props }: InputMone
   };
 
   return (
-    <Input {...props} addonBefore={addonBefore} value={currentValue} onChange={handleOnChange} />
+    <Input addonBefore={addonBefore} value={currentValue} onChange={handleOnChange} {...props} />
   );
 };
 

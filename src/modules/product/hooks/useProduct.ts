@@ -9,13 +9,14 @@ import { useProductReducer } from '../../../store/reducers/productReducer/usePro
 import { ProductRoutesEnum } from '../routes';
 
 export const useProduct = () => {
+  const [productIdDelete, setProductIdDelete] = useState<number | undefined>();
   const { products, setProducts } = useProductReducer();
-  const [productsFiltered, setProductsFiltered] = useState<ProductType[]>();
+  const [productsFiltered, setProdutsFiltered] = useState<ProductType[]>([]);
   const { request } = useRequests();
   const navigate = useNavigate();
 
   useEffect(() => {
-    setProductsFiltered([...products]);
+    setProdutsFiltered([...products]);
   }, [products]);
 
   useEffect(() => {
@@ -27,19 +28,39 @@ export const useProduct = () => {
   };
 
   const onSearch = (value: string) => {
-    if (value) {
-      setProductsFiltered([
-        ...products.filter((product) => product.name.toLowerCase().includes(value.toLowerCase())),
-      ]);
+    if (!value) {
+      setProdutsFiltered([...products]);
     } else {
-      setProductsFiltered([...products]);
+      setProdutsFiltered([...productsFiltered.filter((product) => product.name.includes(value))]);
     }
   };
 
-  const handleDeleteProduct = async (productId: number) => {
-    await request(URL_PRODUCT_ID.replace('{productId}', `${productId}`), MethodsEnum.DELETE);
+  const handleDeleteProduct = async () => {
+    await request(URL_PRODUCT_ID.replace('{productId}', `${productIdDelete}`), MethodsEnum.DELETE);
     await request<ProductType[]>(URL_PRODUCTS, MethodsEnum.GET, setProducts);
+    setProductIdDelete(undefined);
   };
 
-  return { products, productsFiltered, handleOnClickInsert, onSearch, handleDeleteProduct };
+  const handleEditProduct = async (productId: number) => {
+    navigate(ProductRoutesEnum.PRODUCT_EDIT.replace(':productId', `${productId}`));
+  };
+
+  const handleCloseModalDelete = () => {
+    setProductIdDelete(undefined);
+  };
+
+  const handleOpenModalDelete = (productId: number) => {
+    setProductIdDelete(productId);
+  };
+
+  return {
+    productsFiltered,
+    openModalDelete: !!productIdDelete,
+    handleOnClickInsert,
+    onSearch,
+    handleDeleteProduct,
+    handleEditProduct,
+    handleCloseModalDelete,
+    handleOpenModalDelete,
+  };
 };

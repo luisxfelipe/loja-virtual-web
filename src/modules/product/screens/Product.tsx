@@ -1,26 +1,36 @@
-import { Input } from 'antd';
+import { Input, Modal } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import { useMemo } from 'react';
 
-import { DeleteOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
 import Button from '../../../shared/components/buttons/button/Button';
 import Screen from '../../../shared/components/screen/Screen';
 import {
-    DisplayFlex, DisplayFlexJustifyBetween
+  DisplayFlex,
+  DisplayFlexJustifyBetween,
 } from '../../../shared/components/styles/display.styles';
 import { LimitedContainer } from '../../../shared/components/styles/limited.styles';
 import Table from '../../../shared/components/table/Table';
 import { convertNumberToMoney } from '../../../shared/functions/money';
 import { ProductType } from '../../../shared/types/ProductType';
-import CategoryColum from '../components/CategoryColum';
+import CategoryColumn from '../components/CategoryColumn';
 import TooltipImage from '../components/TooltipImage';
 import { useProduct } from '../hooks/useProduct';
 
 const { Search } = Input;
 
 const Product = () => {
-  const { productsFiltered, handleOnClickInsert, onSearch, handleDeleteProduct } = useProduct();
+  const {
+    productsFiltered,
+    openModalDelete,
+    handleOnClickInsert,
+    onSearch,
+    handleDeleteProduct,
+    handleEditProduct,
+    handleCloseModalDelete,
+    handleOpenModalDelete,
+  } = useProduct();
 
   const columns: ColumnsType<ProductType> = useMemo(
     () => [
@@ -41,24 +51,32 @@ const Product = () => {
         title: 'Categoria',
         dataIndex: 'category',
         key: 'category',
-        render: (_, product) => <CategoryColum category={product.category} />,
+        render: (_, product) => <CategoryColumn category={product.category} />,
       },
       {
         title: 'Preço',
         dataIndex: 'price',
         key: 'price',
-        render: (_, product) => <a>{convertNumberToMoney(Number(product.price))}</a>,
+        render: (_, product) => <a>{convertNumberToMoney(product.price)}</a>,
       },
       {
         title: 'Ações',
+        dataIndex: '',
         width: 240,
-        key: 'action',
+        key: 'x',
         render: (_, product) => (
           <LimitedContainer width={180}>
             <DisplayFlex>
               <Button
-                onClick={() => handleDeleteProduct(product.id)}
+                margin="0px 16px 0px 0px"
+                onClick={() => handleEditProduct(product.id)}
+                icon={<EditOutlined />}
+              >
+                Editar
+              </Button>
+              <Button
                 danger
+                onClick={() => handleOpenModalDelete(product.id)}
                 icon={<DeleteOutlined />}
               >
                 Deletar
@@ -72,14 +90,34 @@ const Product = () => {
   );
 
   return (
-    <Screen listBreadcrumb={[{ name: 'HOME' }, { name: 'PRODUTOS' }]}>
+    <Screen
+      listBreadcrumb={[
+        {
+          name: 'HOME',
+        },
+        {
+          name: 'PRODUTOS',
+        },
+      ]}
+    >
+      <Modal
+        title="Atenção"
+        open={openModalDelete}
+        onOk={handleDeleteProduct}
+        onCancel={handleCloseModalDelete}
+        okText="Sim"
+        cancelText="Cancelar"
+      >
+        <p>Tem certeza que deseja excluir esse produto?</p>
+      </Modal>
       <DisplayFlexJustifyBetween margin="0px 0px 16px 0px">
         <LimitedContainer width={240}>
           <Search placeholder="Buscar produto" onSearch={onSearch} enterButton />
         </LimitedContainer>
+
         <LimitedContainer width={120}>
           <Button type="primary" onClick={handleOnClickInsert}>
-            Novo Produto
+            Inserir
           </Button>
         </LimitedContainer>
       </DisplayFlexJustifyBetween>

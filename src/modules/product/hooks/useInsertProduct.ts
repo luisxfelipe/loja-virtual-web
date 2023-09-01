@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { URL_PRODUCTS } from '../../../shared/constants/urls';
+import { URL_PRODUCT_ID, URL_PRODUCTS } from '../../../shared/constants/urls';
 import { InsertProduct } from '../../../shared/dtos/InsertProduct.dto';
-import { connectionAPIPost } from '../../../shared/functions/connection/connectionApi';
-import { useGlobalReducer } from '../../../store/reducers/globalReducer/useGlobalReducer';
+import { MethodsEnum } from '../../../shared/enums/methods.enum';
+import { useRequests } from '../../../shared/hooks/useRequests';
+import { useProductReducer } from '../../../store/reducers/productReducer/useProductReducer';
 import { ProductRoutesEnum } from '../routes';
 
 const DEFAULT_PRODUCT = {
@@ -18,30 +19,62 @@ const DEFAULT_PRODUCT = {
   diameter: 0,
 };
 
-export const useInsertProduct = () => {
+export const useInsertProduct = (productId?: string) => {
   const navigate = useNavigate();
-  const { setNotification } = useGlobalReducer();
-  const [loading, setLoading] = useState(false);
+  const [loadingProduct, setLoadingProduct] = useState(false);
+  const { request, loading } = useRequests();
+  const { product: productReducer, setProduct: setProductReducer } = useProductReducer();
+  const [isEdit, setIsEdit] = useState(false);
   const [disabledButton, setDisabledButton] = useState(true);
   const [product, setProduct] = useState<InsertProduct>(DEFAULT_PRODUCT);
 
   useEffect(() => {
-    if (
-      product.name &&
-      product.image &&
-      product.categoryId &&
-      product.price > 0 &&
-      product.weight > 0 &&
-      product.length > 0 &&
-      product.width > 0 &&
-      product.height > 0 &&
-      product.diameter > 0
-    ) {
+    if (product.name && product.categoryId && product.image && product.price > 0) {
       setDisabledButton(false);
     } else {
       setDisabledButton(true);
     }
   }, [product]);
+
+  useEffect(() => {
+    if (productReducer) {
+      setProduct({
+        name: productReducer.name,
+        price: productReducer.price,
+        image: productReducer.image,
+        weight: productReducer.weight,
+        length: productReducer.length,
+        height: productReducer.height,
+        width: productReducer.width,
+        diameter: productReducer.diameter,
+        categoryId: productReducer.category?.id,
+      });
+    }
+  }, [productReducer]);
+
+  useEffect(() => {
+    const findProduct = async () => {
+      setLoadingProduct(true);
+      await request(
+        URL_PRODUCT_ID.replace('{productId}', productId || ''),
+        MethodsEnum.GET,
+        setProductReducer,
+      );
+      setLoadingProduct(false);
+    };
+
+    if (productId) {
+      setIsEdit(true);
+      findProduct();
+    } else {
+      setProductReducer(undefined);
+      setProduct(DEFAULT_PRODUCT);
+    }
+  }, [productId]);
+
+  const handleOnClickCancel = () => {
+    navigate(ProductRoutesEnum.PRODUCT);
+  };
 
   const onChangeInput = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -55,28 +88,36 @@ export const useInsertProduct = () => {
   };
 
   const handleChangeSelect = (value: string) => {
-    setProduct({ ...product, categoryId: Number(value) });
+    setProduct({
+      ...product,
+      categoryId: Number(value),
+    });
   };
 
   const handleInsertProduct = async () => {
-    setLoading(true);
-    await connectionAPIPost(URL_PRODUCTS, product)
-      .then(() => {
-        setNotification('Sucesso', 'success', 'Produto inserido com sucesso!');
-        navigate(ProductRoutesEnum.PRODUCT);
-      })
-      .catch((error: Error) => {
-        setNotification(error.message, 'error');
-      });
-    setLoading(false);
+    if (productId) {
+      await request(
+        URL_PRODUCT_ID.replace('{productId}', productId),
+        MethodsEnum.PATCH,
+        undefined,
+        product,
+        'Produto modificado!',
+      );
+    } else {
+      await request(URL_PRODUCTS, MethodsEnum.POST, undefined, product, 'Produto criado!');
+    }
+    navigate(ProductRoutesEnum.PRODUCT);
   };
 
   return {
     product,
     loading,
     disabledButton,
+    isEdit,
+    loadingProduct,
     onChangeInput,
     handleInsertProduct,
     handleChangeSelect,
+    handleOnClickCancel,
   };
 };
