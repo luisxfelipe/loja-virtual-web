@@ -1,19 +1,25 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import { URL_CATEGORIES } from '../../../shared/constants/urls';
+import { URL_CATEGORIES, URL_CATEGORY_ID } from '../../../shared/constants/urls';
 import { MethodsEnum } from '../../../shared/enums/methods.enum';
 import { useRequests } from '../../../shared/hooks/useRequests';
 import { useCategoryReducer } from '../../../store/reducers/categoryReducer/useCategoryReducer';
 import { CategoryRoutesEnum } from '../routes';
 
 export const useInsertCategory = () => {
+  const { categoryId } = useParams<{ categoryId: string }>();
   const [name, setName] = useState('');
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
   const [disabledButton, setDisabledButton] = useState(true);
-  const { request } = useRequests();
-  const { setCategories } = useCategoryReducer();
+  const { request, loading } = useRequests();
+  const { setCategories, category, setCategory } = useCategoryReducer();
+
+  useEffect(() => {
+    if (category) {
+      setName(category.name);
+    }
+  }, [category]);
 
   useEffect(() => {
     if (name) {
@@ -23,13 +29,27 @@ export const useInsertCategory = () => {
     }
   }, [name]);
 
+  useEffect(() => {
+    if (categoryId) {
+      request(URL_CATEGORY_ID.replace('{categoryId}', categoryId), MethodsEnum.GET, setCategory);
+    } else {
+      setName('');
+    }
+  }, [categoryId]);
+
   const insertCategory = async () => {
-    setLoading(true);
+    if (categoryId) {
+      await request(
+        URL_CATEGORY_ID.replace('{categoryId}', categoryId),
+        MethodsEnum.PATCH,
+        undefined,
+        { name },
+      );
+    } else {
+      await request(URL_CATEGORIES, MethodsEnum.POST, undefined, { name });
+    }
 
-    await request(URL_CATEGORIES, MethodsEnum.POST, undefined, { name });
     await request(URL_CATEGORIES, MethodsEnum.GET, setCategories);
-
-    setLoading(false);
 
     navigate(CategoryRoutesEnum.CATEGORY);
   };
@@ -40,6 +60,7 @@ export const useInsertCategory = () => {
 
   return {
     name,
+    categoryId,
     handleOnChangeName,
     loading,
     disabledButton,

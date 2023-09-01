@@ -1,7 +1,7 @@
 import { Input, Modal } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 
-import { DeleteOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
 import Button from '../../../shared/components/buttons/button/Button';
 import Screen from '../../../shared/components/screen/Screen';
@@ -25,6 +25,7 @@ const Category = () => {
     handleOpenModalDelete,
     handleCloseModalDelete,
     handleConfirmDeleteCategory,
+    handleEditCategory,
   } = useCategory();
 
   const columns: ColumnsType<CategoryType> = [
@@ -56,7 +57,9 @@ const Category = () => {
         <LimitedContainer width={180}>
           <DisplayFlex>
             <LimitedContainer margin="0px 16px 0px 0px" width={90}>
-              <Button onClick={() => null}>Editar</Button>
+              <Button onClick={() => handleEditCategory(category.id)} icon={<EditOutlined />}>
+                Editar
+              </Button>
             </LimitedContainer>
             {category.quantityProducts === 0 && (
               <Button
